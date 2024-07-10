@@ -1,6 +1,9 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLSchema, GraphQLList } from 'graphql'
 import { GraphQLDate } from 'graphql-scalars';
-import { decks, cards } from '../sampleData.js'
+// import { decks, cards } from '../sampleData.js'
+
+import Deck from '../models/Deck.js'
+import Card from '../models/Card.js'
 
 const DeckType = new GraphQLObjectType({
     name: 'Deck',
@@ -12,7 +15,7 @@ const DeckType = new GraphQLObjectType({
         cards: {
             type: new GraphQLList(CardType),
             resolve(parent,arg){
-                return cards.filter(card => card.deckId === parent.deckId)
+                return Card.find({ deckId: parent._id })
             }
         }
     })
@@ -35,28 +38,28 @@ const RootQuery = new GraphQLObjectType({
         decks:{
             type: new GraphQLList(DeckType),
             resolve(parent,args){
-                return decks
+                return Deck.find()
             }
         },
         deck:{
             type: DeckType,
             args: { deckId: {type: GraphQLID} },
             resolve(parent,args){
-                return decks.find(deck => deck.deckId === args.deckId)
+                return Deck.findById(args.deckId)
             }
         },
         
         cards:{
             type: new GraphQLList(CardType),
             resolve(parent,args){
-                return cards
+                return Card.find()
             }
         },
         card:{
             type: CardType,
             args: { cardId: {type: GraphQLID} },
             resolve(parent,args){
-                return cards.find(card => card.cardId === args.cardId)
+                return Card.findById(args.cardId)
             }
         }
     }
