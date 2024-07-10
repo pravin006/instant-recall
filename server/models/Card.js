@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 
 const CardSchema = new mongoose.Schema({
-    cardId: {type:String},
     deckId: {
         type:mongoose.Schema.Types.ObjectId,
         ref: 'Deck'
