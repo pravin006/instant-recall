@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.card {
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-toggle::after {
+  display: none !important; 
+}
+
+.dropdown-item:hover{
+  filter: brightness(0.80);
+}
