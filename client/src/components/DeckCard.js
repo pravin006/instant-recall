@@ -1,14 +1,16 @@
 import Card from 'react-bootstrap/Card';
 import DropdownComponent from './DropdownComponent';
+import { useNavigate } from "react-router-dom";
 
 function DeckCard({deck}) {
-    const handleClick = (id) =>{
-        console.log(`${id} clicked`)
-    }
+  const navigate = useNavigate();
+
+  const handleClick = (id) =>{
+    navigate(`/deck/${id}`)
+  }
 
   return (
     <Card
-        
         style={{ cursor: 'pointer' }}
         bg='secondary'
         border="success"

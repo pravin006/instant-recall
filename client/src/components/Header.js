@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { NavLink } from 'react-router-dom'
 
 import logo from './assets/logo.png'
 import { CiSettings } from "react-icons/ci";
@@ -9,15 +10,13 @@ function Header() {
     return (
         <Navbar bg="dark" data-bs-theme="dark" expand="xs" className="bg-body-tertiary">
           <Container>
-                <div className="d-flex align-items-center">
-                    <img
-                    src={logo}
-                    width="40"
-                    height="40"
-                    alt="Logo"
-                />
-                <Navbar.Brand href="#home">InstantRecall</Navbar.Brand>
-            </div>
+                <NavLink to="/" style={{'text-decoration': 'none'}}>
+                    <div className="d-flex align-items-center">
+                        <img src={logo} width="40" height="40" alt="Logo"/>
+                        <Navbar.Brand>InstantRecall</Navbar.Brand>
+                    </div>
+                </NavLink>
+                
 
             <Navbar.Toggle aria-controls="basic-navbar-nav">
                     <CiSettings size={24} />

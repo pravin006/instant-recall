@@ -1,6 +1,9 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
 import Header from './components/Header'
 import DecksPage from './components/DecksPage'
+import NotFoundPage from './components/NotFoundPage'
+import DeckPage from './components/DeckPage'
 
 const cache = new InMemoryCache({
   typePolicies:{
@@ -31,10 +34,16 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
-        <Header/>
-        <div className="container">
-          <DecksPage/>
-        </div>
+        <Router>
+          <Header/>
+          <div className="container">
+            <Routes>
+              <Route path='/' element={<DecksPage/>}/>
+              <Route path='/deck/:id' element={<DeckPage/>}/>
+              <Route path='*' element={<NotFoundPage/>}/>
+            </Routes>
+          </div>
+        </Router>
       </ApolloProvider>
     </>
   );
