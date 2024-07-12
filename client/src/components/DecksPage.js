@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { GET_DECKS } from '../queries/deckQueries'
 import SpinnerComponent from './SpinnerComponent'
 import DeckCard from './DeckCard'
+import CreateDeckModal from './CreateDeckModal'
 
 
 function DecksPage() {
@@ -10,6 +11,7 @@ function DecksPage() {
 
   return (
     <Container className="mt-5">
+        <CreateDeckModal/>
         {loading && <SpinnerComponent />}
         {error && <p>Something went wrong...</p>}
         {!loading && !error && (

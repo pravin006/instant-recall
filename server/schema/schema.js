@@ -90,7 +90,7 @@ const mutation = new GraphQLObjectType({
             type: DeckType,
             args: { _id: {type: GraphQLNonNull(GraphQLID)}},
             resolve(parent,args){
-                return Deck.findOneAndDelete(args._id)
+                return Deck.findOneAndDelete({ _id: args._id })
             }
         },
 
@@ -136,7 +136,7 @@ const mutation = new GraphQLObjectType({
             type: CardType,
             args: {_id:{type: GraphQLNonNull(GraphQLID)}},
             resolve(parent, args){
-                return Card.findOneAndDelete(args._id)
+                return Card.findOneAndDelete({ _id: args._id })
             }
         },
 

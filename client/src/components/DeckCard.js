@@ -20,7 +20,7 @@ function DeckCard({deck}) {
             <div onClick={() => handleClick(deck._id)} style={{ flex: 1 }}>
                 <Card.Title className="mb-0">{deck.deckName}</Card.Title>
             </div>
-            <DropdownComponent/>   
+            <DropdownComponent cardId={deck._id}/>   
           </Card.Header>
 
           <Card.Body onClick={() => handleClick(deck._id)}>
