@@ -10,3 +10,18 @@ export const GET_DECKS = gql`
         }
     }
 `;
+
+export const GET_DECK = gql`
+    query getDeck($_id: ID!) {
+        deck(_id:$_id){
+            deckName
+            lastActive
+            cards{
+                _id
+                question
+                answer
+                dueForReview
+            }
+        }
+    }
+`
