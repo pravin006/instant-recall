@@ -5,11 +5,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useMutation } from '@apollo/client';
 import { ADD_CARD } from '../mutations/cardMutations';
-import { GET_DECK } from '../queries/deckQueries'
+import { GET_DECK } from '../queries/deckQueries';
 
 
 function EditCardPage() {
-    const location = useLocation();
+    const location = useLocation()
     const { deckid } = location.state
 
     const [question, setQuestion] = useState('')
@@ -18,7 +18,7 @@ function EditCardPage() {
     const [addCard] = useMutation(ADD_CARD,{
         variables: { deckid, question, answer },
         update(cache, { data: { addCard } }) {
-            const { deck } = cache.readQuery({ query: GET_DECK, variables: { _id: deckid }});
+            const { deck } = cache.readQuery({ query: GET_DECK, variables: { _id: deckid }})
       
             cache.writeQuery({ query: GET_DECK, variables: { _id: deckid },
               data: {
@@ -27,7 +27,7 @@ function EditCardPage() {
                   cards: [...deck.cards, addCard]
                 }
               }
-            });
+            })
         }
     })
 
@@ -35,10 +35,10 @@ function EditCardPage() {
         e.preventDefault()
         try {
             addCard()
-            setQuestion('');
-            setAnswer('');
+            setQuestion('')
+            setAnswer('')
         } catch (error) {
-            console.error('Error adding card:', error);
+            console.error('Error adding card:', error)
         }
     }
 
