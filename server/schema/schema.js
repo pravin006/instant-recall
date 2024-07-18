@@ -28,7 +28,7 @@ const CardType = new GraphQLObjectType({
         deckId: {type: GraphQLID},
         question: {type: GraphQLString},
         answer: {type: GraphQLString},
-        dueForReview: {type: GraphQLDate}
+        dueForReview: {type: GraphQLString}
     })
 })
 
