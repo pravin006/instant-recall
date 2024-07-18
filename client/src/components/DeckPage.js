@@ -44,7 +44,7 @@ function DeckPage() {
               <Card.Body>
                 <Card.Title>Create Card</Card.Title>
 
-                <Button className="align-items-center" variant="primary" onClick={() => navigate('/create')}>Create</Button>
+                <Button className="align-items-center" variant="primary" onClick={() => navigate('/create', { state: { deckid: id } })}>Create</Button>
               </Card.Body>
             </Card>
           </Col>

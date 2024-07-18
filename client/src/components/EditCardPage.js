@@ -1,14 +1,46 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Container,Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useMutation } from '@apollo/client';
-import { GET_DECK } from '../queries/deckQueries';
+import { ADD_CARD } from '../mutations/cardMutations';
+import { GET_DECK } from '../queries/deckQueries'
 
 
 function EditCardPage() {
+    const location = useLocation();
+    const { deckid } = location.state
+
     const [question, setQuestion] = useState('')
     const [answer, setAnswer] = useState('')
+
+    const [addCard] = useMutation(ADD_CARD,{
+        variables: { deckid, question, answer },
+        update(cache, { data: { addCard } }) {
+            const { deck } = cache.readQuery({ query: GET_DECK, variables: { _id: deckid }});
+      
+            cache.writeQuery({ query: GET_DECK, variables: { _id: deckid },
+              data: {
+                deck: {
+                  ...deck,
+                  cards: [...deck.cards, addCard]
+                }
+              }
+            });
+        }
+    })
+
+    const submit = async (e) =>{
+        e.preventDefault()
+        try {
+            addCard()
+            setQuestion('');
+            setAnswer('');
+        } catch (error) {
+            console.error('Error adding card:', error);
+        }
+    }
 
 
   return (
@@ -34,7 +66,7 @@ function EditCardPage() {
 
             <Row className="justify-content-center">
                 <Col sm={12} lg={6}>
-                    <Button  className='w-100' variant="outline-primary" type="submit">
+                    <Button  className='w-100' variant="outline-primary" onClick={submit}>
                         Save
                     </Button>
                 </Col>
