@@ -5,6 +5,7 @@ import DecksPage from './components/DecksPage'
 import NotFoundPage from './components/NotFoundPage'
 import DeckPage from './components/DeckPage'
 import EditCardPage from './components/EditCardPage'
+import ReviewPage from './components/ReviewPage'
 
 const cache = new InMemoryCache({
   typePolicies:{
@@ -41,6 +42,7 @@ function App() {
             <Routes>
               <Route path='/' element={<DecksPage/>}/>
               <Route path='/deck/:id' element={<DeckPage/>}/>
+              <Route path='/review/:deckid' element={<ReviewPage/>}/>
               <Route path='/create' element={<EditCardPage/>}/>
               <Route path='*' element={<NotFoundPage/>}/>
             </Routes>

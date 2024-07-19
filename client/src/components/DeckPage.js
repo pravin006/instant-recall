@@ -32,7 +32,7 @@ function DeckPage() {
               <Card.Body>
                 <Card.Title>42 cards due</Card.Title>
 
-                <Button className="align-items-center" variant="primary">Review</Button>
+                <Button className="align-items-center" variant="primary" onClick={() => navigate(`/review/${id}`)}>Review</Button>
               </Card.Body>
             </Card>
           </Col>
