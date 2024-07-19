@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLSchema, GraphQLList, GraphQLNonNull } from 'graphql'
-import { GraphQLDate } from 'graphql-scalars';
+import { GraphQLDate, GraphQLDateTime } from 'graphql-scalars';
 // import { decks, cards } from '../sampleData.js'
 
 import Deck from '../models/Deck.js'
@@ -28,7 +28,7 @@ const CardType = new GraphQLObjectType({
         deckId: {type: GraphQLID},
         question: {type: GraphQLString},
         answer: {type: GraphQLString},
-        dueForReview: {type: GraphQLString}
+        dueForReview: {type: GraphQLDateTime}
     })
 })
 
@@ -126,7 +126,7 @@ const mutation = new GraphQLObjectType({
                     deckId: args.deckId,
                     question: args.question,
                     answer: args.answer,
-                    dueForReview: Date.now()
+                    dueForReview: new Date()
                 })
                 return card.save()
             }
@@ -146,7 +146,7 @@ const mutation = new GraphQLObjectType({
                 _id: {type: GraphQLNonNull(GraphQLID)},
                 question: {type: GraphQLString},
                 answer: {type: GraphQLString},
-                dueForReview: {type: GraphQLDate}
+                dueForReview: {type: GraphQLDateTime}
             },
             resolve(parent, args){
                 return Card.findByIdAndUpdate(args._id, {

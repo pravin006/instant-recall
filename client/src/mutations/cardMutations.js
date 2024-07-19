@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const UPDATE_CARD = gql`
-    mutation updateCard($_id: ID!, $question:String!, $answer:String!){
-        updateCard(_id:$_id, question:$question, answer:$answer){
+    mutation updateCard($_id: ID!, $question:String, $answer:String, $dueForReview: DateTime){
+        updateCard(_id:$_id, question:$question, answer:$answer, dueForReview: $dueForReview){
             _id
             question
             answer
