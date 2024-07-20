@@ -70,7 +70,7 @@ function ReviewPage() {
 
     
   return (
-    <Container>
+    <Container style={{color:'white'}}>
         {!minHeap ? <SpinnerComponent /> :
         !currentCard ? <CompletedReview completedCards = {completedCards.length} deckid = {deckid}/> :
         (
