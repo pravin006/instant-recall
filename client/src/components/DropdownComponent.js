@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client'
 import { GET_DECKS } from '../queries/deckQueries'
 import { DELETE_DECK } from '../mutations/deckMutations'
 
-function DropdownComponent({cardId}) {
+function DropdownComponent({cardId, bgColor}) {
   const [deleteDeck] = useMutation(DELETE_DECK,{
     variables: { _id: cardId },
     // refetchQueries: [{query: GET_DECKS}]
@@ -20,7 +20,7 @@ function DropdownComponent({cardId}) {
 
   return (
     <Dropdown onClick={(e)=> e.stopPropagation()} >
-        <Dropdown.Toggle variant="secondary" className="btn-no-caret">
+        <Dropdown.Toggle variant="secondary" className="btn-no-caret" style={{ backgroundColor: bgColor }}>
             <SlOptionsVertical />
         </Dropdown.Toggle>
 

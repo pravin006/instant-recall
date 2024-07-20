@@ -11,21 +11,20 @@ function DeckCard({deck}) {
 
   return (
     <Card
-        style={{ cursor: 'pointer' }}
-        bg='secondary'
+        style={{ cursor: 'pointer', backgroundColor: deck.color}}
         border="success"
         //   key={variant}
-        //   text={variant.toLowerCase() === 'light' ? 'dark' : 'white'}
+        text={deck.textColor}
         >
             <div className="card-content" style={{ cursor: 'pointer' }} onClick={() => handleClick(deck._id)}>
           <Card.Header className='d-flex justify-content-between align-items-center'>
             <div onClick={() => handleClick(deck._id)} style={{ flex: 1 }}>
                 <Card.Title className="mb-0">{deck.deckName}</Card.Title>
             </div>
-            <DropdownComponent cardId={deck._id}/>   
+            <DropdownComponent cardId={deck._id} bgColor={deck.color}/>   
           </Card.Header>
 
-          <Card.Body onClick={() => handleClick(deck._id)}>
+          <Card.Body onClick={() => handleClick(deck._id)} >
             <Card.Text>
                 {deck.isActive ? 'Active' : 'Inactive'}
                 <br/>
