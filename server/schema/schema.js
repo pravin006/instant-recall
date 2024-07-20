@@ -12,6 +12,8 @@ const DeckType = new GraphQLObjectType({
         deckName: {type: GraphQLString},
         isActive: {type: GraphQLBoolean},
         lastActive: {type: GraphQLDate},
+        color:{type: GraphQLString},
+        textColor:{type: GraphQLString},
         cards: {
             type: new GraphQLList(CardType),
             resolve(parent,arg){
@@ -74,13 +76,17 @@ const mutation = new GraphQLObjectType({
             args: {
                 deckName: {type: GraphQLNonNull(GraphQLString)},
                 isActive: {type: GraphQLBoolean},
-                lastActive: {type: GraphQLDate}
+                lastActive: {type: GraphQLDate},
+                color:{type: GraphQLString},
+                textColor:{type: GraphQLString},
             },
             resolve(parent,args){
                 const deck = new Deck({
                     deckName: args.deckName,
                     isActive: args.isActive || true,
-                    lastActive: args.lastActive || Date.now()
+                    lastActive: args.lastActive || Date.now(),
+                    color:args.color,
+                    textColor:args.textColor,
                 })
                 return deck.save()
             }
@@ -101,6 +107,8 @@ const mutation = new GraphQLObjectType({
                 deckName: {type: GraphQLString},
                 isActive: {type: GraphQLBoolean},
                 lastActive: {type: GraphQLDate},
+                color:{type: GraphQLString},
+                textColor:{type: GraphQLString},
             },
             resolve(parent,args){
                 return Deck.findByIdAndUpdate(args._id, {
@@ -108,6 +116,8 @@ const mutation = new GraphQLObjectType({
                         deckName: args.deckName,
                         isActive: args.isActive,
                         lastActive: args.lastActive,
+                        color:args.color,
+                        textColor:args.textColor,
                     }},
                     { new: true }
                 )

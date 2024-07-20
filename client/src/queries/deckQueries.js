@@ -7,6 +7,8 @@ export const GET_DECKS = gql`
             deckName
             isActive
             lastActive
+            color
+            textColor
         }
     }
 `;
@@ -16,6 +18,8 @@ export const GET_DECK = gql`
         deck(_id:$_id){
             deckName
             lastActive
+            color
+            textColor
             cards{
                 _id
                 question

@@ -17,7 +17,6 @@ function CreateDeckModal() {
     const [color, setColor] = useState("#563d7c")
 
     const [addDeck] = useMutation(ADD_DECK,{
-        variables:{name},
         update(cache, {data: {addDeck}}){
             const {decks} = cache.readQuery({query:GET_DECKS})
             cache.writeQuery({
@@ -25,63 +24,77 @@ function CreateDeckModal() {
                 data:{ decks: [...decks, addDeck]}
             })
         }
-    })    
+    })
+
+    function isColorLightOrDark(hexColor) {
+        const hex = hexColor.replace(/^#/, '');
+        let r = parseInt(hex.substring(0, 2), 16);
+        let g = parseInt(hex.substring(2, 4), 16);
+        let b = parseInt(hex.substring(4, 6), 16);
+      
+        r /= 255;
+        g /= 255;
+        b /= 255;
+      
+        r = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+        g = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+        b = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+      
+        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        return luminance > 0.179 ? 'black' : 'white';
+    }
 
     const submit = (e) =>{
         e.preventDefault()
-        addDeck(name)
+        const textColor = isColorLightOrDark(color)
+        addDeck({variables:{name,color, textColor}})
         setName('')
     }
     
     return (
         <>
-            <Button variant="secondary" onClick={handleShow} className='mb-3'>
+            <Button variant="outline-primary" onClick={handleShow} className='mb-3'>
             Create New Deck
             </Button>
 
             <Modal show={show} onHide={handleClose} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>Create Deck</Modal.Title>
-            </Modal.Header>
+                <Modal.Header closeButton>
+                    <Modal.Title>Create Deck</Modal.Title>
+                </Modal.Header>
 
-            <Modal.Body>
-                <Form onSubmit={submit}>
-                    <Form.Group className="mb-3" controlId="deckName">
-                        <Form.Label>Deck Name</Form.Label>
-                        <Form.Control
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        autoFocus
-                        />
-                    </Form.Group>
-                    
-                    <Form.Group className="mb-3">
-                        <Form.Label >Choose Deck Theme</Form.Label>
-                        <Form.Control 
-                            style={{width:'100%'}}
-                            type="color"
-                            id="colorInput"
-                            // defaultValue="#563d7c"
-                            // title="Choose your color"
-                            value={color}
-                            onChange={(e) => setColor(e.target.value)}
-                        />
-                    </Form.Group>
+                <Modal.Body>
+                    <Form onSubmit={submit}>
+                        <Form.Group className="mb-3" controlId="deckName">
+                            <Form.Label>Deck Name</Form.Label>
+                            <Form.Control
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            autoFocus
+                            />
+                        </Form.Group>
+                        
+                        <Form.Group className="mb-3">
+                            <Form.Label >Choose Deck Theme</Form.Label>
+                            <Form.Control 
+                                style={{width:'100%'}}
+                                type="color"
+                                id="colorInput"
+                                value={color}
+                                onChange={(e) => setColor(e.target.value)}
+                            />
+                        </Form.Group>
 
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                        Close
-                        </Button>
-                        <Button variant="primary" onClick={handleClose} type='submit'>
-                        Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal.Body>
-
-            
-
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                            Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose} type='submit'>
+                            Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal.Body>
             </Modal>
         </>
     );
