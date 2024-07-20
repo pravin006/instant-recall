@@ -39,11 +39,12 @@ function DeckPage() {
         <>
         <Row className='mb-3 justify-content-center'>
           <Col xs={12} lg={8} xl={6} className="mb-3">
-            <Card className="align-items-center">
-              <Card.Body>
+            <Card className="align-items-center " style={{backgroundColor:'#b1b7bd'}}>
+              <Card.Body >
                 <Card.Title>{overdueCards.length} cards due</Card.Title>
-
-                <Button className="align-items-center" variant="primary" onClick={() => navigate(`/review/${id}`)}>Review</Button>
+                <div className="d-flex justify-content-center">
+                  <Button className="align-items-center" variant="primary" onClick={() => navigate(`/review/${id}`)}>Review</Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -51,11 +52,9 @@ function DeckPage() {
 
         <Row className='mb-3 justify-content-center'>
           <Col xs={12} lg={8} xl={6} className="mb-3">
-            <Card className="align-items-center">
+            <Card className="align-items-center" style={{cursor:'pointer', backgroundColor:data.deck.color}} onClick={() => navigate('/create', { state: { deckid: id } })}>
               <Card.Body>
                 <Card.Title>Create Card</Card.Title>
-
-                <Button className="align-items-center" variant="primary" onClick={() => navigate('/create', { state: { deckid: id } })}>Create</Button>
               </Card.Body>
             </Card>
           </Col>
@@ -64,7 +63,7 @@ function DeckPage() {
         <Row className="justify-content-center">
           {data.deck.cards.map(card =>(
             <Col key={card._id} xs={12}  lg={6} xl={4} className="mb-3">
-              <CardCard card={card} />
+              <CardCard card={card} color={data.deck.color}/>
             </Col>
           ))}
 
