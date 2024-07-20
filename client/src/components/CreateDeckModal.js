@@ -10,7 +10,11 @@ import { ADD_DECK } from '../mutations/deckMutations';
 function CreateDeckModal() {
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false)
+        setName('')
+    };
+
     const handleShow = () => setShow(true);
 
     const [name, setName] = useState('')
@@ -54,19 +58,20 @@ function CreateDeckModal() {
     return (
         <>
             <Button variant="outline-primary" onClick={handleShow} className='mb-3'>
-            Create New Deck
+                Create New Deck
             </Button>
 
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal className="input-modal" show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Create Deck</Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
-                    <Form onSubmit={submit}>
+                <Modal.Body >
+                    <Form onSubmit={submit} >
                         <Form.Group className="mb-3" controlId="deckName">
-                            <Form.Label>Deck Name</Form.Label>
+                            <Form.Label >Deck Name</Form.Label>
                             <Form.Control
+                            
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}

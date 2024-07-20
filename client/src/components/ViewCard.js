@@ -44,37 +44,32 @@ function ViewCard({show, onHide, card}) {
     }
 
     return (
-        <Modal show={show} onHide={handleClose}  fullscreen>
+        <Modal show={show} onHide={handleClose}  fullscreen className="input-modal">
             
-            <Modal.Header closeButton>
-            </Modal.Header>
-            
-            <Container>
-                <Modal.Body>
-                
-                    <Row className="mb-3" controlId="formPlaintextEmail">
-                        <Col >
-                        <Form.Control plaintext={edit} readOnly={edit} value={question} onChange={(e) => setQuestion(e.target.value)} />
-                        </Col>
-                    </Row>
-
-                    <Row className="mb-3" controlId="formPlaintextEmail">
-                        <Col >
-                        <Form.Control plaintext={edit} readOnly={edit} value={answer} onChange={(e) => setAnswer(e.target.value)}/>
-                        </Col>
-                    </Row>
-
-                </Modal.Body>
-            
-                <Row className="justify-content-center">
-                    <Col sm={12} lg={6}>
-                        <Button className='w-100' variant="outline-primary" onClick={handleClick}>
-                            {edit ? 'Edit' : 'Save'}
-                        </Button>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+                <Container>
+                <Row className="justify-content-center mb-3">
+                    <Col sm={12} lg={8} >
+                        <Form.Control plaintext={edit} readOnly={edit} value={question} onChange={(e) => setQuestion(e.target.value)}/>
                     </Col>
                 </Row>
-            </Container>
-            
+
+                <Row className="justify-content-center mb-3">
+                    <Col sm={12} lg={8} >
+                        <Form.Control plaintext={edit} readOnly={edit} value={answer} onChange={(e) => setAnswer(e.target.value)}/>
+                    </Col>
+                </Row>
+                </Container>
+            </Modal.Body>
+        
+            <Modal.Footer >
+                <Row  className="justify-content-right">
+                    <Button  variant="outline-primary" onClick={handleClick}>
+                        {edit ? 'Edit' : 'Save'}
+                    </Button>
+                </Row>
+            </Modal.Footer>
         </Modal>
     );
 }

@@ -23,3 +23,27 @@ code {
 .dropdown-item:hover{
   filter: brightness(0.80);
 }
+
+.input-modal .modal-header{
+  background-color: #27292b;
+  color:white
+}
+
+.input-modal .modal-body{
+  background-color: #27292b;
+  color: white;
+}
+
+.input-modal .form-control {
+  background-color: #27292b;
+  color: #ffffff;
+  border-color: white;
+}
+
+.input-modal .form-label {
+  color: white;
+}
+
+.input-modal .modal-footer{
+  background-color: #27292b;
+}
