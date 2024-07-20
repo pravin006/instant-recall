@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
+import { useQuery} from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
@@ -15,14 +16,24 @@ function DeckPage() {
   const {data,loading,error} = useQuery(GET_DECK,{
     variables:{_id:id}
   })  
-
+  
   const navigate = useNavigate()
 
+  const [overdueCards, setOverdueCards] = useState([])
+  const [effectLoading, setEffectLoading] = useState(true);
 
+  useEffect(()=>{
+    setEffectLoading(true);
+    if (data && data.deck && data.deck.cards) {
+      const currentDate = new Date()
+      setOverdueCards(data.deck.cards.filter(card => new Date(card.dueForReview) < currentDate))
+    }
+    setEffectLoading(false);
+  },[data])
 
   return (
     <Container className="mt-5">
-      {loading && <SpinnerComponent />}
+      {effectLoading && <SpinnerComponent />}
       {error && <p>Something went wrong...</p>}
       {!loading && !error && (
         <>
@@ -30,7 +41,7 @@ function DeckPage() {
           <Col xs={12} lg={8} xl={6} className="mb-3">
             <Card className="align-items-center">
               <Card.Body>
-                <Card.Title>42 cards due</Card.Title>
+                <Card.Title>{overdueCards.length} cards due</Card.Title>
 
                 <Button className="align-items-center" variant="primary" onClick={() => navigate(`/review/${id}`)}>Review</Button>
               </Card.Body>
