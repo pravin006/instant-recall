@@ -12,8 +12,7 @@ function DeckCard({deck}) {
   return (
     <Card
         style={{ cursor: 'pointer', backgroundColor: deck.color}}
-        border="success"
-        //   key={variant}
+        border="light"
         text={deck.textColor}
         >
             <div className="card-content" style={{ cursor: 'pointer' }} onClick={() => handleClick(deck._id)}>
