@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useFetcher, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Container,Row,Col, Button } from 'react-bootstrap'
 import { useApolloClient } from '@apollo/client';
 import { GET_DECK } from '../queries/deckQueries';
@@ -10,6 +10,7 @@ import { UPDATE_CARD } from '../mutations/cardMutations';
 import CompletedReview from './CompletedReview';
 import SpinnerComponent from './SpinnerComponent';
 
+import { TiArrowBack } from "react-icons/ti";
 
 
 function ReviewPage() {
@@ -54,14 +55,17 @@ function ReviewPage() {
         const newDueForReview = new Date(today.setDate(today.getDate() + days))
         updateCard({variables:{ _id:completed._id, dueForReview: newDueForReview }})
 
-        const updatedCompleted = { ...completed, newDueForReview }
         setCompletedCards(prevCompletedCards => {
-            const newCompletedCards = [...prevCompletedCards, updatedCompleted]
-            console.log(newCompletedCards)
-            return newCompletedCards
+            return [...prevCompletedCards, completed]  
         })
         setCurrentCard(!timer ? minHeap.peek() : null)
         setViewAnswer(false)
+    }
+
+    const prevCard = () =>{
+        const lastCompleted = completedCards.pop()
+        minHeap.add(lastCompleted)
+        setCurrentCard(minHeap.peek())
     }
 
     
@@ -71,6 +75,9 @@ function ReviewPage() {
         !currentCard ? <CompletedReview completedCards = {completedCards.length} deckid = {deckid}/> :
         (
         <>
+        <Button disabled = {completedCards.length === 0} onClick = {prevCard} className='mt-3 mb-3 d-flex justify-content-center align-items-center'>
+            <TiArrowBack />
+        </Button>
         <Row>
             <p>{currentCard.question}</p>
         </Row>
@@ -84,9 +91,9 @@ function ReviewPage() {
         {!viewAnswer ? 
             <Row><Button onClick={() => setViewAnswer(true)}>View Answer</Button></Row> :(
         <Col>
-            <Row><Button onClick={() => handleRecall(0)}>Unable to recall. Keep due for review date.Move to next card in min heap</Button></Row>
-            <Row><Button onClick={() => handleRecall(1)}>Able to recall after a while. +1 day to dueForReview date. Move to next card in min heap</Button></Row>
-            <Row><Button onClick={() => handleRecall(3)}>Easily able to recall. +3 days to dueForReview date. Move to next card in min heap</Button></Row>
+            <Row><Button className='mb-2' onClick={() => handleRecall(0)}>Unable to recall. Keep due for review date.Move to next card in min heap</Button></Row>
+            <Row><Button className='mb-2' onClick={() => handleRecall(1)}>Able to recall after a while. +1 day to dueForReview date. Move to next card in min heap</Button></Row>
+            <Row><Button className='mb-2' onClick={() => handleRecall(3)}>Easily able to recall. +3 days to dueForReview date. Move to next card in min heap</Button></Row>
         </Col>
         )}
         </>
