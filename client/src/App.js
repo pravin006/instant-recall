@@ -38,7 +38,7 @@ function App() {
       <ApolloProvider client={client}>
         <Router>
           <Header/>
-          <div className="container">
+          <div className="container-fluid" style={{ backgroundColor: '#27292b', minHeight: '100vh',paddingTop: '20px' }}>
             <Routes>
               <Route path='/' element={<DecksPage/>}/>
               <Route path='/deck/:id' element={<DeckPage/>}/>
