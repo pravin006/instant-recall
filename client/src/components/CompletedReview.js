@@ -4,22 +4,22 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FaCheckCircle } from "react-icons/fa";
 
 function CompletedReview({completedCards, deckid}) {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate(`/deck/${deckid}`);
-        }, 3000);
+            navigate(`/deck/${deckid}`)
+        }, 3000)
 
-        return () => clearTimeout(timer);
-    }, [navigate]);
+        return () => clearTimeout(timer)
+    }, [navigate,deckid])
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
           <Row className="text-center">
             <Col>
               <FaCheckCircle size={50} className="mb-3" />
-              <h4>{completedCards} cards completed</h4>
+              <h4>{completedCards} cards reviewed</h4>
             </Col>
           </Row>
         </Container>
