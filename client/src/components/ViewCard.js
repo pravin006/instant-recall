@@ -48,16 +48,44 @@ function ViewCard({show, onHide, card}) {
             
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
-                <Container>
-                <Row className="justify-content-center mb-3">
+                <Container className="h-100">
+                <Row className="justify-content-center h-50">
                     <Col sm={12} lg={8} >
-                        <Form.Control plaintext={edit} readOnly={edit} value={question} onChange={(e) => setQuestion(e.target.value)}/>
+                        <Form.Control 
+                            plaintext={edit}
+                            as="textarea" 
+                            readOnly={edit} 
+                            value={question} 
+                            onChange={(e) => setQuestion(e.target.value)}
+                            style={{
+                                backgroundColor: 'transparent',
+                                color: '#ffffff' ,
+                                border: edit && 'none',
+                                borderBottom: edit && '1px solid #838583',
+                                height: '100%',
+                                resize: 'none',
+                                fontSize:'22px',
+                            }}/>
                     </Col>
                 </Row>
 
-                <Row className="justify-content-center mb-3">
+                <Row className="justify-content-center h-50">
                     <Col sm={12} lg={8} >
-                        <Form.Control plaintext={edit} readOnly={edit} value={answer} onChange={(e) => setAnswer(e.target.value)}/>
+                        <Form.Control 
+                            plaintext={edit}
+                            as="textarea"
+                            readOnly={edit} 
+                            value={answer} 
+                            onChange={(e) => setAnswer(e.target.value)}
+                            style={{
+                                backgroundColor: 'transparent',
+                                color: '#ffffff' ,
+                                border: edit && 'none',
+                                height: '100%',
+                                resize: 'none',
+                                
+                                fontSize:'22px'
+                            }}/>
                     </Col>
                 </Row>
                 </Container>
