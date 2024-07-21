@@ -91,10 +91,7 @@ function CreateDeckModal() {
                         </Form.Group>
 
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                            Close
-                            </Button>
-                            <Button variant="primary" type='submit'>
+                            <Button variant="outline-light" type='submit'>
                             Save
                             </Button>
                         </Modal.Footer>
