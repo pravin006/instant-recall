@@ -16,7 +16,7 @@ function DecksPage() {
         {error && <p>Something went wrong...</p>}
         {!loading && !error && (
             <Row className="justify-content-center">
-                {data.decks.map(deck => (
+                {data.decks.slice().sort((a, b) => new Date(b.lastActive) - new Date(a.lastActive)).map(deck => (
                     <Col key={deck._id} xs={12}  lg={6} xl={4} className="mb-3">
                         <DeckCard deck={deck} />
                     </Col>

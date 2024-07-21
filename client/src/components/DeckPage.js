@@ -61,7 +61,7 @@ function DeckPage() {
         </Row>
 
         <Row className="justify-content-center">
-          {data.deck.cards.map(card =>(
+          {data.deck.cards.slice().reverse().map(card =>(
             <Col key={card._id} xs={12}  lg={6} xl={4} className="mb-3">
               <CardCard card={card} color={data.deck.color}/>
             </Col>
