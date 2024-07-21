@@ -48,11 +48,11 @@ function CreateDeckModal() {
         return luminance > 0.179 ? 'black' : 'white';
     }
 
-    const submit = (e) =>{
+    const submit = async (e) =>{
         e.preventDefault()
         const textColor = isColorLightOrDark(color)
-        addDeck({variables:{name,color, textColor}})
-        setName('')
+        await addDeck({variables:{name, color, textColor}})
+        handleClose()
     }
     
     return (
@@ -94,8 +94,8 @@ function CreateDeckModal() {
                             <Button variant="secondary" onClick={handleClose}>
                             Close
                             </Button>
-                            <Button variant="primary" onClick={handleClose} type='submit'>
-                            Save Changes
+                            <Button variant="primary" type='submit'>
+                            Save
                             </Button>
                         </Modal.Footer>
                     </Form>
