@@ -43,7 +43,7 @@ function DeckPage() {
               <Card.Body >
                 <Card.Title>{overdueCards.length} cards due</Card.Title>
                 <div className="d-flex justify-content-center">
-                  <Button className="align-items-center" variant="primary" onClick={() => navigate(`/review/${id}`)}>Review</Button>
+                  <Button variant="outline-dark" onClick={() => navigate(`/review/${id}`)}>Review</Button>
                 </div>
               </Card.Body>
             </Card>

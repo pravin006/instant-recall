@@ -66,7 +66,7 @@ function EditCardPage() {
 
             <Row className="justify-content-center">
                 <Col sm={12} lg={6}>
-                    <Button  className='w-100' variant="outline-primary" onClick={submit}>
+                    <Button  className='w-100' variant="outline-light" onClick={submit}>
                         Save
                     </Button>
                 </Col>

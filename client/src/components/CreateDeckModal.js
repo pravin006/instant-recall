@@ -57,7 +57,7 @@ function CreateDeckModal() {
     
     return (
         <>
-            <Button variant="outline-primary" onClick={handleShow} className='mb-3'>
+            <Button variant="outline-light" onClick={handleShow} className='mb-3'>
                 Create New Deck
             </Button>
 

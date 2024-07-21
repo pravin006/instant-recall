@@ -63,6 +63,7 @@ function ReviewPage() {
     }
 
     const prevCard = () =>{
+        setViewAnswer(false)
         const lastCompleted = completedCards.pop()
         minHeap.add(lastCompleted)
         setCurrentCard(minHeap.peek())
@@ -77,7 +78,7 @@ function ReviewPage() {
         <>
         <Row className="d-flex justify-content-end mt-3 mb-3">
             <Col xs="auto">
-                <Button disabled = {completedCards.length === 0} onClick = {prevCard} className='mt-3 mb-3 d-flex justify-content-center align-items-center'>
+                <Button variant="outline-light" disabled = {completedCards.length === 0} onClick = {prevCard} className='mt-3 mb-3 d-flex justify-content-center align-items-center'>
                     <TiArrowBack />
                 </Button>
             </Col>
@@ -94,14 +95,14 @@ function ReviewPage() {
             </Col>
         </Row>
 
-        <Row className="d-flex justify-content-center mb-3">
+        <Row className="mb-3">
             {!viewAnswer ? 
-                <Button onClick={() => setViewAnswer(true)}>View Answer</Button> 
+                <Button variant="outline-light" onClick={() => setViewAnswer(true)}>View Answer</Button> 
                 :(
                 <Col>
-                    <Button className='mb-2' onClick={() => handleRecall(0)}>Unable to recall. Keep due for review date.Move to next card in min heap</Button>
-                    <Button className='mb-2' onClick={() => handleRecall(1)}>Able to recall after a while. +1 day to dueForReview date. Move to next card in min heap</Button>
-                    <Button className='mb-2' onClick={() => handleRecall(3)}>Easily able to recall. +3 days to dueForReview date. Move to next card in min heap</Button>
+                    <Button className='mb-2' onClick={() => handleRecall(0)} style={{backgroundColor:'#d61818', border:'none', color:'black', width:'100%'}}>Unable to recall.</Button>
+                    <Button className='mb-2' onClick={() => handleRecall(1)} style={{backgroundColor:'#d6d018', border:'none', color:'black', width:'100%'}}>Took awhile...</Button>
+                    <Button className='mb-2' onClick={() => handleRecall(3)} style={{backgroundColor:'#2bd618', border:'none', color:'black', width:'100%'}}>Easy!</Button>
                 </Col>
                 )
             }
