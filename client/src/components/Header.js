@@ -8,7 +8,7 @@ import { CiSettings } from "react-icons/ci";
 
 function Header() {
     return (
-        <Navbar bg="dark" data-bs-theme="dark" expand="xs" className="bg-body-tertiary">
+        <Navbar bg="dark" data-bs-theme="dark" expand="xs" className="bg-body-tertiary" style={{height: '8vh'}}>
           <Container>
                 <NavLink to="/" style={{'text-decoration': 'none'}}>
                     <div className="d-flex align-items-center">

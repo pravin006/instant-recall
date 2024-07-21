@@ -15,7 +15,7 @@ function CompletedReview({completedCards, deckid}) {
     }, [navigate,deckid])
 
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '92vh' }}>
           <Row className="text-center">
             <Col>
               <FaCheckCircle size={50} className="mb-3" />

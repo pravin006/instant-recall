@@ -10,7 +10,7 @@ function DecksPage() {
     const {loading,error, data} = useQuery(GET_DECKS)
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-3">
         <CreateDeckModal/>
         {loading && <SpinnerComponent />}
         {error && <p>Something went wrong...</p>}

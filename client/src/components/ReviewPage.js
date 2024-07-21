@@ -70,32 +70,42 @@ function ReviewPage() {
 
     
   return (
-    <Container style={{color:'white'}}>
+    <Container style={{ color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         {!minHeap ? <SpinnerComponent /> :
         !currentCard ? <CompletedReview completedCards = {completedCards.length} deckid = {deckid}/> :
         (
         <>
-        <Button disabled = {completedCards.length === 0} onClick = {prevCard} className='mt-3 mb-3 d-flex justify-content-center align-items-center'>
-            <TiArrowBack />
-        </Button>
-        <Row>
-            <p>{currentCard.question}</p>
+        <Row className="d-flex justify-content-end mt-3 mb-3">
+            <Col xs="auto">
+                <Button disabled = {completedCards.length === 0} onClick = {prevCard} className='mt-3 mb-3 d-flex justify-content-center align-items-center'>
+                    <TiArrowBack />
+                </Button>
+            </Col>
         </Row>
-        <Row hidden={!viewAnswer}>
-            <p>{currentCard.answer}</p>
-        </Row>
-        <Row hidden={!viewAnswer}>
-            <p>{currentCard.dueForReview}</p>
+        
+        <Row style={{ flex: '1' }}>
+            <Col>
+                <div style={{ height: '50%' }}>
+                    <p>{currentCard.question}</p>
+                </div>
+                <div style={{ height: '50%' }} hidden={!viewAnswer}>
+                    <p>{currentCard.answer}</p>
+                </div>
+            </Col>
         </Row>
 
-        {!viewAnswer ? 
-            <Row><Button onClick={() => setViewAnswer(true)}>View Answer</Button></Row> :(
-        <Col>
-            <Row><Button className='mb-2' onClick={() => handleRecall(0)}>Unable to recall. Keep due for review date.Move to next card in min heap</Button></Row>
-            <Row><Button className='mb-2' onClick={() => handleRecall(1)}>Able to recall after a while. +1 day to dueForReview date. Move to next card in min heap</Button></Row>
-            <Row><Button className='mb-2' onClick={() => handleRecall(3)}>Easily able to recall. +3 days to dueForReview date. Move to next card in min heap</Button></Row>
-        </Col>
-        )}
+        <Row className="d-flex justify-content-center mb-3">
+            {!viewAnswer ? 
+                <Button onClick={() => setViewAnswer(true)}>View Answer</Button> 
+                :(
+                <Col>
+                    <Button className='mb-2' onClick={() => handleRecall(0)}>Unable to recall. Keep due for review date.Move to next card in min heap</Button>
+                    <Button className='mb-2' onClick={() => handleRecall(1)}>Able to recall after a while. +1 day to dueForReview date. Move to next card in min heap</Button>
+                    <Button className='mb-2' onClick={() => handleRecall(3)}>Easily able to recall. +3 days to dueForReview date. Move to next card in min heap</Button>
+                </Col>
+                )
+            }
+        </Row>
         </>
         )}
     </Container>

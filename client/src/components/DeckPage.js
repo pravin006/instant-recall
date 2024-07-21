@@ -32,7 +32,7 @@ function DeckPage() {
   },[data])
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-3">
       {effectLoading && <SpinnerComponent />}
       {error && <p>Something went wrong...</p>}
       {!loading && !error && (
@@ -60,7 +60,7 @@ function DeckPage() {
           </Col>
         </Row>
 
-        <Row className="justify-content-center">
+        <Row className="mb-3 justify-content-center">
           {data.deck.cards.slice().reverse().map(card =>(
             <Col key={card._id} xs={12}  lg={6} xl={4} className="mb-3">
               <CardCard card={card} color={data.deck.color}/>
