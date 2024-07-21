@@ -52,7 +52,7 @@ function DeckPage() {
 
         <Row className='mb-3 justify-content-center'>
           <Col xs={12} lg={8} xl={6} className="mb-3">
-            <Card className="align-items-center" style={{cursor:'pointer', backgroundColor:data.deck.color}} onClick={() => navigate('/create', { state: { deckid: id } })}>
+            <Card className="align-items-center" style={{cursor:'pointer', backgroundColor:data.deck.color}} onClick={() => navigate('/create', { state: { deckid: id, name:data.deck.deckName } })}>
               <Card.Body>
                 <Card.Title>Create Card</Card.Title>
               </Card.Body>

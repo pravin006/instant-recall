@@ -10,8 +10,9 @@ import { GET_DECK } from '../queries/deckQueries';
 
 function EditCardPage() {
     const location = useLocation()
-    const { deckid } = location.state
+    const { deckid, name } = location.state
 
+    console.log(name)
     const [question, setQuestion] = useState('')
     const [answer, setAnswer] = useState('')
 
@@ -45,21 +46,22 @@ function EditCardPage() {
 
   return (
     <Container className='mt-3'>
-    
-        <Form className='mt-5'>
+        <Row>
+            <h3 style={{color:'#ffffff'}}>
+                {name}
+            </h3>
+        </Row>
+        <Form className='mt-3'>
             <Row className='mb-3'>
                 <Col sm={12} lg={6}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Question</Form.Label>
-                        <Form.Control onChange={(e) => setQuestion(e.target.value)} as="textarea" rows={8} value={question}/>
-                        
+                    <Form.Group className="mb-3">
+                        <Form.Control onChange={(e) => setQuestion(e.target.value)} as="textarea" rows={9}  value={question} placeholder="Card Question Here" style={{resize: 'none',}}/>
                     </Form.Group>
                 </Col>
 
                 <Col sm={12} lg={6}>
-                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Answer</Form.Label>
-                        <Form.Control onChange={(e) => setAnswer(e.target.value)} as="textarea" rows={8} value={answer}/>
+                    <Form.Group className="mb-3">
+                        <Form.Control onChange={(e) => setAnswer(e.target.value)} as="textarea" rows={9} value={answer} placeholder="Card Answer Here" style={{resize: 'none',}}/>
                     </Form.Group>
                 </Col>
             </Row>
