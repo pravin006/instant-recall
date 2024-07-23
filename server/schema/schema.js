@@ -95,8 +95,8 @@ const mutation = new GraphQLObjectType({
         deleteDeck:{
             type: DeckType,
             args: { _id: {type: GraphQLNonNull(GraphQLID)}},
-            resolve(parent,args){
-                return Deck.findOneAndDelete({ _id: args._id })
+            async resolve(parent,args){
+                return await Deck.findOneAndDelete({ _id: args._id })   
             }
         },
 
