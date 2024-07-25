@@ -1,0 +1,30 @@
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+    - client/node_modules/
+    - server/node_modules/
+
+build_client:
+  stage: build
+  image: node:latest
+  script:
+    - cd client
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - client/build
+
+build_server:
+  stage: build
+  image: node:latest
+  script:
+    - cd server
+    - npm install
+  artifacts:
+    paths:
+      - server/build 
