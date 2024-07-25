@@ -6,6 +6,6 @@ test('renders learn react link', () => {
   act(() => {
     render(<App />);
   });
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(/InstantRecall/i);
   expect(linkElement).toBeInTheDocument();
 });
