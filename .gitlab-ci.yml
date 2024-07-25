@@ -4,7 +4,6 @@ stages:
 
 cache:
   paths:
-    - node_modules/
     - client/node_modules/
     - server/node_modules/
 
@@ -18,6 +17,7 @@ build_client:
   artifacts:
     paths:
       - client/build
+      - client/node_modules
 
 build_server:
   stage: build
@@ -27,4 +27,33 @@ build_server:
     - npm install
   artifacts:
     paths:
-      - server/build 
+      - server/build
+      - server/node_modules
+
+test_client:
+  stage: test
+  image: node:latest
+  dependencies:
+    - build_client
+  script:
+    - cd client
+    - npm test -- --watchAll=false --detectOpenHandles
+
+test_server:
+  stage: test
+  image: node:latest
+  services:
+    - name: mongo:latest
+      alias: mongo
+  variables:
+    MONGO_URI: mongodb://mongo:27017/test
+  dependencies:
+    - build_server
+  script:
+    - cd server
+    - npm start &
+    - sleep 10
+    - echo "Server started successfully"
+    - curl http://localhost:5000
+    - pkill node
+    - echo "No tests available"
