@@ -39,7 +39,8 @@ function DeckPage() {
         <>
         <Row className='mb-3 justify-content-center'>
           <Col xs={12} lg={8} xl={6} className="mb-3">
-            <Card className="align-items-center " style={{backgroundColor:'#b1b7bd'}}>
+            <Card className="align-items-center " style={{backgroundImage: `linear-gradient(45deg, ${data.deck.color}, #ffffff)`
+}}>
               <Card.Body >
                 <Card.Title>{overdueCards.length} cards due</Card.Title>
                 <div className="d-flex justify-content-center">
