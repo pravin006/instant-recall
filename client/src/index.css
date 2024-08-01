@@ -47,3 +47,7 @@ code {
 .input-modal .modal-footer{
   background-color: #27292b;
 }
+
+.input-modal .btn-close {
+  filter: invert(100%);
+}
