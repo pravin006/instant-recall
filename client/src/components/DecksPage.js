@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { GET_DECKS } from '../queries/deckQueries'
 import SpinnerComponent from './SpinnerComponent'
 import DeckCard from './DeckCard'
-import CreateDeckModal from './CreateDeckModal'
+import CreateEditDeckModal from './CreateEditDeckModal'
 
 
 function DecksPage() {
@@ -11,7 +11,7 @@ function DecksPage() {
 
   return (
     <Container className="mt-3">
-        <CreateDeckModal/>
+        <CreateEditDeckModal existingName={''} existingColor={"#563d7c"}/>
         {loading && <SpinnerComponent />}
         {error && <p>Something went wrong...</p>}
         {!loading && !error && (

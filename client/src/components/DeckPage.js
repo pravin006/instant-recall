@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card';
 import { GET_DECK } from '../queries/deckQueries';
 import CardCard from './CardCard'
 import SpinnerComponent from './SpinnerComponent';
+import CreateEditDeckModal from './CreateEditDeckModal';
 
 
 function DeckPage() {
@@ -37,6 +38,13 @@ function DeckPage() {
       {error && <p>Something went wrong...</p>}
       {!loading && !error && (
         <>
+        <Row className='mb-3'>
+            <h3 style={{color:'#ffffff'}}>
+              {data.deck.deckName}
+              <CreateEditDeckModal existingName={data.deck.deckName} existingColor={data.deck.color} id={id}/>
+            </h3>
+        </Row>
+        
         <Row className='mb-3 justify-content-center'>
           <Col xs={12} lg={8} xl={6} className="mb-3">
             <Card className="align-items-center " style={{backgroundImage: `linear-gradient(45deg, ${data.deck.color}, #ffffff)`

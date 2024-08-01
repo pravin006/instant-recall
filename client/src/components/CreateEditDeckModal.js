@@ -3,11 +3,13 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { GET_DECKS } from '../queries/deckQueries';
-import { ADD_DECK } from '../mutations/deckMutations';
+import { MdEdit } from "react-icons/md";
+import { GET_DECK, GET_DECKS } from '../queries/deckQueries';
+import { ADD_DECK, UPDATE_DECK } from '../mutations/deckMutations';
 
 
-function CreateDeckModal() {
+
+function CreateEditDeckModal({existingName, existingColor, id}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
@@ -17,8 +19,8 @@ function CreateDeckModal() {
 
     const handleShow = () => setShow(true);
 
-    const [name, setName] = useState('')
-    const [color, setColor] = useState("#563d7c")
+    const [name, setName] = useState(existingName)
+    const [color, setColor] = useState(existingColor)
 
     const [addDeck] = useMutation(ADD_DECK,{
         update(cache, {data: {addDeck}}){
@@ -26,6 +28,22 @@ function CreateDeckModal() {
             cache.writeQuery({
                 query: GET_DECKS,
                 data:{ decks: [...decks, addDeck]}
+            })
+        }
+    })
+
+    const [updateDeck] = useMutation(UPDATE_DECK,{
+        update(cache, {data: {updateDeck}}){
+            const deck = cache.readQuery({query:GET_DECK, variables: { _id: updateDeck._id } })
+            cache.writeQuery({
+                query: GET_DECK,
+                variables: { _id: updateDeck._id },
+                data:{
+                    deck: {
+                    ...deck.deck,
+                    ...updateDeck,
+                    }
+                }
             })
         }
     })
@@ -51,19 +69,24 @@ function CreateDeckModal() {
     const submit = async (e) =>{
         e.preventDefault()
         const textColor = isColorLightOrDark(color)
-        await addDeck({variables:{name, color, textColor}})
+        if (!id){
+            await addDeck({variables:{name, color, textColor}})
+        } else{
+            await updateDeck({variables:{id, name, color, textColor}})
+        }
         handleClose()
     }
     
     return (
         <>
-            <Button variant="outline-light" onClick={handleShow} className='mb-3'>
-                Create New Deck
+            <Button variant="outline-light" onClick={handleShow} className='mb-3' style={{border: id != null && 'none'}}>
+                {id == null ? 'Create Deck' 
+                : <MdEdit />} 
             </Button>
 
             <Modal className="input-modal" show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create Deck</Modal.Title>
+                    <Modal.Title>{id == null ? 'Create' : 'Edit'} Deck</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body >
@@ -102,4 +125,4 @@ function CreateDeckModal() {
     );
 }
 
-export default CreateDeckModal
+export default CreateEditDeckModal
