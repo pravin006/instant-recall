@@ -24,8 +24,7 @@ function DeckCard({deck}) {
           </Card.Header>
 
           <Card.Body onClick={() => handleClick(deck._id)} >
-            <Card.Text>
-                {deck.isActive ? 'Active' : 'Inactive'}
+            <Card.Text className='m-1'>
                 <br/>
                 Last Active: {deck.lastActive}
             </Card.Text>

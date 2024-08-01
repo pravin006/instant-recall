@@ -9,10 +9,10 @@ function CardCard({card, color}) {
 
   return (
     <>
-    <Card onClick={() => setModalShow(true)} bg='#49464e' text='white' style={{ cursor: 'pointer', backgroundColor:'#49464e', borderColor: color, borderWidth: '3px' }}>
-        <Card.Header className='m-3'>{card.question}</Card.Header>
-        <Card.Body className="m-3">
-            <Card.Text>{card.answer}</Card.Text>
+    <Card onClick={() => setModalShow(true)} bg='#49464e' text='white' style={{ cursor: 'pointer', backgroundColor:'#49464e', borderColor: color, borderWidth: '2px', height: '10rem' }}>
+        <Card.Header style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginLeft: '1rem', marginRight: '1rem' }}>{card.question}</Card.Header>
+        <Card.Body  style={{ marginLeft: '1rem', marginRight: '1rem'}}>
+            <Card.Text style={{ overflow: 'hidden',display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 4}}>{card.answer}</Card.Text>
         </Card.Body>
     </Card>
 
