@@ -22,6 +22,7 @@ export const GET_DECK = gql`
             textColor
             cards{
                 _id
+                deckId
                 question
                 answer
                 dueForReview

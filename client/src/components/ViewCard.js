@@ -7,7 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 
 import { useMutation } from '@apollo/client';
-import { UPDATE_CARD } from '../mutations/cardMutations';
+import { UPDATE_CARD, DELETE_CARD } from '../mutations/cardMutations';
+import { GET_DECK } from '../queries/deckQueries';
 
 function ViewCard({show, onHide, card}) {
     const [question, setQuestion] = useState(card.question)
@@ -19,8 +20,25 @@ function ViewCard({show, onHide, card}) {
         variables: { _id: card._id, question, answer }
     })
 
+    const [deleteCard] = useMutation(DELETE_CARD,{
+        variables: { _id: card._id },
+        update(cache, { data: { deleteCard } }) {
+            const { deck } = cache.readQuery({query: GET_DECK, variables: { _id: card.deckId }})
 
-    const handleClick = async () =>{
+            cache.writeQuery({
+                query: GET_DECK,
+                variables: { _id: card.deckId },
+                data: {
+                    deck: {
+                        ...deck,
+                        cards: deck.cards.filter(cachedCard => cachedCard._id !== deleteCard._id)
+                    }
+                }
+            })
+        }
+    })
+
+    const handleEditSave = async () =>{
         if(edit){
             setEdit(false)
         }
@@ -33,6 +51,15 @@ function ViewCard({show, onHide, card}) {
                 console.error('Error updating card:', error)
             }
 
+        }
+    }
+
+    const handleDelete = async () =>{
+        try {
+            await deleteCard(card._id)
+            onHide()
+        } catch (error) {
+            console.error('Error deleting card:', error)
         }
     }
 
@@ -93,9 +120,16 @@ function ViewCard({show, onHide, card}) {
         
             <Modal.Footer >
                 <Row  className="justify-content-right">
-                    <Button  variant="outline-primary" onClick={handleClick}>
-                        {edit ? 'Edit' : 'Save'}
-                    </Button>
+                    <Col>
+                        <Button  variant="outline-danger" onClick={handleDelete}>
+                            Delete
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button  variant="outline-primary" onClick={handleEditSave}>
+                            {edit ? 'Edit' : 'Save'}
+                        </Button>
+                    </Col>
                 </Row>
             </Modal.Footer>
         </Modal>

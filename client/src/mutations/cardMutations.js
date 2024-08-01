@@ -22,3 +22,10 @@ export const ADD_CARD = gql`
     }
 `
 
+export const DELETE_CARD = gql`
+    mutation deleteCard($_id: ID!){
+        deleteCard(_id:$_id){
+            _id
+        }
+    }
+`
