@@ -21,3 +21,16 @@ export const DELETE_DECK = gql`
         }
     }
 `;
+
+export const UPDATE_DECK = gql`
+    mutation updateDeck($id: ID!, $name: String!, $color: String!, $textColor: String!) {
+        updateDeck(_id: $id, deckName: $name, color:$color, textColor:$textColor) {
+            _id
+            deckName
+            isActive
+            lastActive
+            color
+            textColor
+        }
+    }
+`;
