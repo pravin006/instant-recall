@@ -76,7 +76,7 @@ function ViewCard({show, onHide, card}) {
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
                 <Container className="h-100">
-                <Row className="justify-content-center h-50">
+                <Row className="justify-content-center" style={{ height: '30%' }}>
                     <Col sm={12} lg={8} >
                         <Form.Control 
                             plaintext={edit}
@@ -96,7 +96,7 @@ function ViewCard({show, onHide, card}) {
                     </Col>
                 </Row>
 
-                <Row className="justify-content-center h-50">
+                <Row className="justify-content-center" style={{ height: '70%' }}>
                     <Col sm={12} lg={8} >
                         <Form.Control 
                             plaintext={edit}
