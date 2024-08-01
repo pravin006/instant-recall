@@ -1,5 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import DropdownComponent from './DropdownComponent';
+import DeleteDeck from './DeleteDeck';
 import { useNavigate } from "react-router-dom";
 
 function DeckCard({deck}) {
@@ -20,7 +20,7 @@ function DeckCard({deck}) {
             <div onClick={() => handleClick(deck._id)} style={{ flex: 1 }}>
                 <Card.Title className="mb-0">{deck.deckName}</Card.Title>
             </div>
-            <DropdownComponent cardId={deck._id} bgColor={deck.color}/>   
+            <DeleteDeck cardId={deck._id} />
           </Card.Header>
 
           <Card.Body onClick={() => handleClick(deck._id)} >
