@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container,Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useMutation } from '@apollo/client';
 import { ADD_CARD } from '../mutations/cardMutations';
 import { GET_DECK } from '../queries/deckQueries';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 function EditCardPage() {
     const location = useLocation()
     const { deckid, name } = location.state
 
-    console.log(name)
     const [question, setQuestion] = useState('')
     const [answer, setAnswer] = useState('')
+
+    const navigate = useNavigate()
 
     const [addCard] = useMutation(ADD_CARD,{
         variables: { deckid, question, answer },
@@ -43,13 +45,24 @@ function EditCardPage() {
         }
     }
 
+    const back = () =>{
+        navigate(`/deck/${deckid}`)
+    }
+
 
   return (
     <Container className='mt-3'>
-        <Row>
+        <Row className="d-flex align-items-center mt-3 mb-3">
+            <Col xs="auto">
+                    <Button variant="outline-light" onClick = {back} className='d-flex justify-content-center align-items-center'>
+                        <TiArrowBack />
+                    </Button>
+            </Col>
+            <Col>
             <h3 style={{color:'#ffffff'}}>
                 {name}
             </h3>
+            </Col>
         </Row>
         <Form className='mt-3'>
             <Row className='mb-3'>
