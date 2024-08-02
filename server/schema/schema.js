@@ -2,6 +2,7 @@ import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLSch
 import { GraphQLDate, GraphQLDateTime } from 'graphql-scalars';
 // import { decks, cards } from '../sampleData.js'
 
+import redis from '../config/redisClient.js'
 import Deck from '../models/Deck.js'
 import Card from '../models/Card.js'
 
@@ -80,7 +81,7 @@ const mutation = new GraphQLObjectType({
                 color:{type: GraphQLString},
                 textColor:{type: GraphQLString},
             },
-            resolve(parent,args){
+            async resolve(parent,args){
                 const deck = new Deck({
                     deckName: args.deckName,
                     isActive: args.isActive || true,
@@ -88,7 +89,9 @@ const mutation = new GraphQLObjectType({
                     color:args.color,
                     textColor:args.textColor,
                 })
-                return deck.save()
+                const savedDeck = await deck.save()
+                await redis.del(`getDecks_undefined`)
+                return savedDeck
             }
         },
 
@@ -96,6 +99,8 @@ const mutation = new GraphQLObjectType({
             type: DeckType,
             args: { _id: {type: GraphQLNonNull(GraphQLID)}},
             async resolve(parent,args){
+                await redis.del(`getDecks_undefined`)
+                await redis.del(`getDeck_${args._id}`)
                 return await Deck.findOneAndDelete({ _id: args._id })   
             }
         },
@@ -110,8 +115,11 @@ const mutation = new GraphQLObjectType({
                 color:{type: GraphQLString},
                 textColor:{type: GraphQLString},
             },
-            resolve(parent,args){
-                return Deck.findByIdAndUpdate(args._id, {
+            async resolve(parent,args){
+                await redis.del(`getDecks_undefined`)
+
+                await redis.del(`getDeck_${args._id}`)
+                return await Deck.findByIdAndUpdate(args._id, {
                     $set: {
                         deckName: args.deckName,
                         isActive: args.isActive,
@@ -131,8 +139,10 @@ const mutation = new GraphQLObjectType({
                 question: {type: GraphQLNonNull(GraphQLString)},
                 answer: {type: GraphQLNonNull(GraphQLString)},
             },
-            resolve(parent,args){
-                const card = new Card({
+            async resolve(parent,args){
+                await redis.del(`getDeck_${args.deckId}`)
+
+                const card = await new Card({
                     deckId: args.deckId,
                     question: args.question,
                     answer: args.answer,
@@ -145,8 +155,10 @@ const mutation = new GraphQLObjectType({
         deleteCard:{
             type: CardType,
             args: {_id:{type: GraphQLNonNull(GraphQLID)}},
-            resolve(parent, args){
-                return Card.findOneAndDelete({ _id: args._id })
+            async resolve(parent, args){
+                const deletedCard = await Card.findOneAndDelete({ _id: args._id })
+                await redis.del(`getDeck_${deletedCard.deckId}`)
+                return deletedCard
             }
         },
 
@@ -158,8 +170,8 @@ const mutation = new GraphQLObjectType({
                 answer: {type: GraphQLString},
                 dueForReview: {type: GraphQLDateTime}
             },
-            resolve(parent, args){
-                return Card.findByIdAndUpdate(args._id, {
+            async resolve(parent, args){
+                const updateCard = await Card.findByIdAndUpdate(args._id, {
                     $set: {
                         question: args.question,
                         answer: args.answer,
@@ -167,6 +179,8 @@ const mutation = new GraphQLObjectType({
                     }},
                     { new: true }
                 )
+                await redis.del(`getDeck_${updateCard.deckId}`)
+                return updateCard
             }
         }
     }
