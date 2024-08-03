@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { useMutation } from '@apollo/client';
 import { ADD_CARD } from '../mutations/cardMutations';
 import { TiArrowBack } from 'react-icons/ti';
+import { GET_DECK } from '../queries/deckQueries';
 
 
 function CreateCardPage() {
@@ -19,6 +20,7 @@ function CreateCardPage() {
 
     const [addCard] = useMutation(ADD_CARD,{
         variables: { deckid, question, answer },
+        refetchQueries: [{ query: GET_DECK, variables: { _id: deckid } }]
     })
 
     const submit = async (e) =>{
