@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useMutation } from '@apollo/client';
 import { ADD_CARD } from '../mutations/cardMutations';
-import { GET_DECK } from '../queries/deckQueries';
 import { TiArrowBack } from 'react-icons/ti';
 
 
