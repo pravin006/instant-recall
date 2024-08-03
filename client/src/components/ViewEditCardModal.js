@@ -10,7 +10,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_CARD, DELETE_CARD } from '../mutations/cardMutations';
 import { GET_DECK } from '../queries/deckQueries';
 
-function ViewCard({show, onHide, card}) {
+function ViewEditCard({show, onHide, card}) {
     const [question, setQuestion] = useState(card.question)
     const [answer, setAnswer] = useState(card.answer)
     
@@ -136,4 +136,4 @@ function ViewCard({show, onHide, card}) {
     );
 }
 
-export default ViewCard
+export default ViewEditCard

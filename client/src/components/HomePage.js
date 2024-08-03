@@ -6,7 +6,7 @@ import DeckCard from './DeckCard'
 import CreateEditDeckModal from './CreateEditDeckModal'
 
 
-function DecksPage() {
+function HomePage() {
     const {loading,error, data} = useQuery(GET_DECKS)
 
   return (
@@ -27,4 +27,4 @@ function DecksPage() {
   )
 }
 
-export default DecksPage
+export default HomePage

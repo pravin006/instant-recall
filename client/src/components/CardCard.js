@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import ViewCard from './ViewCard';
+import ViewEditCardModal from './ViewEditCardModal';
 
 
 function CardCard({card, color}) {
@@ -16,7 +16,7 @@ function CardCard({card, color}) {
         </Card.Body>
     </Card>
 
-    <ViewCard show={modalShow} onHide={() => setModalShow(false)} card={card}/>
+    <ViewEditCardModal show={modalShow} onHide={() => setModalShow(false)} card={card}/>
     </>
   )
 }

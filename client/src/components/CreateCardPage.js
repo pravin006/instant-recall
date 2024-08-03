@@ -8,7 +8,7 @@ import { ADD_CARD } from '../mutations/cardMutations';
 import { TiArrowBack } from 'react-icons/ti';
 
 
-function EditCardPage() {
+function CreateCardPage() {
     const location = useLocation()
     const { deckid, name } = location.state
 
@@ -79,4 +79,4 @@ function EditCardPage() {
   )
 }
 
-export default EditCardPage
+export default CreateCardPage
