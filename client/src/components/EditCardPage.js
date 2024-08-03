@@ -20,18 +20,6 @@ function EditCardPage() {
 
     const [addCard] = useMutation(ADD_CARD,{
         variables: { deckid, question, answer },
-        update(cache, { data: { addCard } }) {
-            const { deck } = cache.readQuery({ query: GET_DECK, variables: { _id: deckid }})
-      
-            cache.writeQuery({ query: GET_DECK, variables: { _id: deckid },
-              data: {
-                deck: {
-                  ...deck,
-                  cards: [...deck.cards, addCard]
-                }
-              }
-            })
-        }
     })
 
     const submit = async (e) =>{

@@ -15,6 +15,7 @@ export const ADD_CARD = gql`
     mutation addCard($deckid: ID!, $question:String!, $answer:String!){
         addCard(deckId:$deckid, question:$question, answer:$answer){
             _id
+            deckId
             question
             answer
             dueForReview
