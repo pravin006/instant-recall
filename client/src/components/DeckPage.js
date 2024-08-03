@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { useQuery} from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, FormControl } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
@@ -21,16 +21,28 @@ function DeckPage() {
   const navigate = useNavigate()
 
   const [overdueCards, setOverdueCards] = useState([])
-  const [effectLoading, setEffectLoading] = useState(true);
+  const [effectLoading, setEffectLoading] = useState(true)
+  const [searchKeyword, setSearchKeyword] = useState('')
+  const [filteredCards, setFilteredCards] = useState([])
 
   useEffect(()=>{
     setEffectLoading(true);
-    if (data && data.deck && data.deck.cards) {
+    if (data?.deck?.cards) {
       const currentDate = new Date()
       setOverdueCards(data.deck.cards.filter(card => new Date(card.dueForReview) < currentDate))
+      setFilteredCards(data.deck.cards)
     }
     setEffectLoading(false);
   },[data])
+
+  useEffect(()=>{
+    if (data?.deck?.cards) {
+      const filtered = data.deck.cards.filter(card =>
+        card.question.toLowerCase().includes(searchKeyword.toLowerCase()) || card.answer.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+      setFilteredCards(filtered)
+    }
+  },[searchKeyword,data])
 
   return (
     <Container className="mt-3">
@@ -70,7 +82,22 @@ function DeckPage() {
         </Row>
 
         <Row className="mb-3 justify-content-center">
-          {data.deck.cards.slice().reverse().map(card =>(
+          <Col xs={12} lg={8} xl={6} className="mb-3">
+              <FormControl 
+                className="search-cards"
+                placeholder="Search cards..."
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#ffffff',
+                }}
+              />
+          </Col>
+        </Row>
+
+        <Row className="mb-3 justify-content-center">
+          {filteredCards.slice().reverse().map(card =>(
             <Col key={card._id} xs={12}  lg={6} xl={4} className="mb-3">
               <CardCard card={card} color={data.deck.color}/>
             </Col>

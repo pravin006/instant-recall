@@ -51,3 +51,7 @@ code {
 .input-modal .btn-close {
   filter: invert(100%);
 }
+
+.search-cards::placeholder{
+  color: #ffffff  !important; 
+}
