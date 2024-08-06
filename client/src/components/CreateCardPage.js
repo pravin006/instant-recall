@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_CARD } from '../mutations/cardMutations';
 import { TiArrowBack } from 'react-icons/ti';
 import { GET_DECK } from '../queries/deckQueries';
+import { toast } from 'react-toastify';
 
 
 function CreateCardPage() {
@@ -19,14 +20,30 @@ function CreateCardPage() {
     const navigate = useNavigate()
 
     const [addCard] = useMutation(ADD_CARD,{
-        variables: { deckid, question, answer },
         refetchQueries: [{ query: GET_DECK, variables: { _id: deckid } }]
     })
 
     const submit = async (e) =>{
         e.preventDefault()
+
+        if (!question.trim() || !answer.trim()) {
+            toast.error('Empty Field(s)!')
+            return
+        }
+
+        const promise = addCard({variables: { deckid, question, answer }})
+
+        toast.promise(
+            promise,
+            {
+                pending:"Creating...",
+                success:'Card added successfully!',
+                error:'Error adding card. Please try again.'
+            }
+        )
+
         try {
-            addCard()
+            await promise
             setQuestion('')
             setAnswer('')
         } catch (error) {
@@ -53,7 +70,7 @@ function CreateCardPage() {
             </h3>
             </Col>
         </Row>
-        <Form className='mt-3'>
+        <Form className='mt-3' onSubmit={(e)=>submit(e)}>
             <Row className='mb-3'>
                 <Col sm={12} lg={6}>
                     <Form.Group className="mb-3">
@@ -70,7 +87,7 @@ function CreateCardPage() {
 
             <Row className="justify-content-center">
                 <Col sm={12} lg={6}>
-                    <Button  className='w-100' variant="outline-light" onClick={submit}>
+                    <Button  type='submit' className='w-100' variant="outline-light">
                         Save
                     </Button>
                 </Col>

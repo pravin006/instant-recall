@@ -1,12 +1,12 @@
 import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { MdEdit } from "react-icons/md";
 import { GET_DECK, GET_DECKS } from '../queries/deckQueries';
 import { ADD_DECK, UPDATE_DECK } from '../mutations/deckMutations';
-
+import { toast } from 'react-toastify';
 
 
 function CreateEditDeckModal({existingName, existingColor, id}) {
@@ -19,8 +19,8 @@ function CreateEditDeckModal({existingName, existingColor, id}) {
 
     const handleShow = () => setShow(true);
 
-    const [name, setName] = useState(existingName)
-    const [color, setColor] = useState(existingColor)
+    const [name, setName] = useState('')
+    const [color, setColor] = useState('')
 
     const [addDeck] = useMutation(ADD_DECK,{
         update(cache, {data: {addDeck}}){
@@ -48,6 +48,13 @@ function CreateEditDeckModal({existingName, existingColor, id}) {
         }
     })
 
+    useEffect(() => {
+        if (show) {
+            setName(existingName)
+            setColor(existingColor)
+        }
+    }, [show, existingName, existingColor])
+
     function isColorLightOrDark(hexColor) {
         const hex = hexColor.replace(/^#/, '');
         let r = parseInt(hex.substring(0, 2), 16);
@@ -68,13 +75,41 @@ function CreateEditDeckModal({existingName, existingColor, id}) {
 
     const submit = async (e) =>{
         e.preventDefault()
-        const textColor = isColorLightOrDark(color)
-        if (!id){
-            await addDeck({variables:{name, color, textColor}})
-        } else{
-            await updateDeck({variables:{id, name, color, textColor}})
+        if (!name.trim()) {
+            toast.error('Name field is empty!')
+            return
         }
-        handleClose()
+
+        const textColor = isColorLightOrDark(color)
+        try {
+            if (!id){
+                const promise = addDeck({variables:{name, color, textColor}})
+                toast.promise(
+                    promise,
+                    {
+                        pending:"Creating...",
+                        success:'Deck created successfully!',
+                        error:'Error creating deck. Please try again.'
+                    }
+                )
+    
+                await promise
+            } else{
+                const promise = updateDeck({variables:{id, name, color, textColor}})
+                toast.promise(
+                    promise,
+                    {
+                        pending:"Updating...",
+                        success:'Deck updated successfully!',
+                        error:'Error updating deck. Please try again.'
+                    }
+                )
+                await promise
+            }
+            handleClose()
+        } catch (error) {
+            console.log('Error: ',error)
+        }
     }
     
     return (
@@ -90,7 +125,7 @@ function CreateEditDeckModal({existingName, existingColor, id}) {
                 </Modal.Header>
 
                 <Modal.Body >
-                    <Form onSubmit={submit} >
+                    <Form onSubmit={(e)=>submit(e)} >
                         <Form.Group className="mb-3" controlId="deckName">
                             <Form.Label >Deck Name</Form.Label>
                             <Form.Control

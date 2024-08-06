@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import { useMutation } from '@apollo/client';
 import { UPDATE_CARD, DELETE_CARD } from '../mutations/cardMutations';
 import { GET_DECK } from '../queries/deckQueries';
+import { toast } from 'react-toastify';
 
 function ViewEditCard({show, onHide, card}) {
     const [question, setQuestion] = useState(card.question)
@@ -16,12 +17,9 @@ function ViewEditCard({show, onHide, card}) {
     
     const [edit, setEdit] = useState(true)
 
-    const [updateCard] = useMutation(UPDATE_CARD,{
-        variables: { _id: card._id, question, answer }
-    })
+    const [updateCard] = useMutation(UPDATE_CARD)
 
     const [deleteCard] = useMutation(DELETE_CARD,{
-        variables: { _id: card._id },
         update(cache, { data: { deleteCard } }) {
             const { deck } = cache.readQuery({query: GET_DECK, variables: { _id: card.deckId }})
 
@@ -44,8 +42,24 @@ function ViewEditCard({show, onHide, card}) {
         }
 
         else{
+            if (!question.trim() || !answer.trim()) {
+                toast.error('Empty Field(s)!')
+                return
+            }
+
+            const promise = updateCard({variables: { _id: card._id, question, answer }})
+
+            toast.promise(
+                promise,
+                {
+                    pending:"Updating...",
+                    success:'Card updated successfully!',
+                    error:'Error updating card. Please try again.'
+                }
+            )
+
             try {
-                await updateCard(card._id, question, answer)
+                await promise
                 setEdit(true)
             } catch (error) {
                 console.error('Error updating card:', error)
@@ -55,8 +69,19 @@ function ViewEditCard({show, onHide, card}) {
     }
 
     const handleDelete = async () =>{
+        const promise = deleteCard({variables: { _id: card._id }})
+
+        toast.promise(
+            promise,
+            {
+                pending:"Deleting...",
+                success:'Card deleted successfully!',
+                error:'Error deleting card. Please try again.'
+            }
+        )
+
         try {
-            await deleteCard(card._id)
+            await promise
             onHide()
         } catch (error) {
             console.error('Error deleting card:', error)
@@ -118,15 +143,15 @@ function ViewEditCard({show, onHide, card}) {
                 </Container>
             </Modal.Body>
         
-            <Modal.Footer >
-                <Row  className="justify-content-right">
+            <Modal.Footer>
+                <Row>
                     <Col>
-                        <Button  variant="outline-danger" onClick={handleDelete}>
+                        <Button  variant="outline-danger" onClick={handleDelete} style={{width:'5rem'}}>
                             Delete
                         </Button>
                     </Col>
                     <Col>
-                        <Button  variant="outline-primary" onClick={handleEditSave}>
+                        <Button  variant="outline-primary" onClick={handleEditSave} style={{width:'5rem'}}>
                             {edit ? 'Edit' : 'Save'}
                         </Button>
                     </Col>
