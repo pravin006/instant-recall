@@ -87,10 +87,10 @@ function ReviewPage() {
         <Row style={{ flex: '1' }}>
             <Col>
                 <div style={{ height: '50%' }}>
-                    <p>{currentCard.question}</p>
+                    <p style={{ fontSize: '1.4rem' }}>{currentCard.question}</p>
                 </div>
                 <div style={{ height: '50%' }} hidden={!viewAnswer}>
-                    <p>{currentCard.answer}</p>
+                    <p style={{ fontSize: '1.4rem' }}>{currentCard.answer}</p>
                 </div>
             </Col>
         </Row>

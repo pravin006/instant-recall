@@ -9,7 +9,7 @@ function CompletedReview({completedCards, deckid}) {
     useEffect(() => {
         const timer = setTimeout(() => {
             navigate(`/deck/${deckid}`)
-        }, 3000)
+        }, 2000)
 
         return () => clearTimeout(timer)
     }, [navigate,deckid])
@@ -19,7 +19,7 @@ function CompletedReview({completedCards, deckid}) {
           <Row className="text-center">
             <Col>
               <FaCheckCircle size={50} className="mb-3" />
-              <h4>{completedCards} cards reviewed</h4>
+              <h4>{completedCards} card{completedCards != 1 && 's'} reviewed</h4>
             </Col>
           </Row>
         </Container>
