@@ -19,7 +19,7 @@ function CompletedReview({completedCards, deckid}) {
           <Row className="text-center">
             <Col>
               <FaCheckCircle size={50} className="mb-3" />
-              <h4>{completedCards} card{completedCards != 1 && 's'} reviewed</h4>
+              <h4>{completedCards} card{completedCards !== 1 && 's'} reviewed</h4>
             </Col>
           </Row>
         </Container>
