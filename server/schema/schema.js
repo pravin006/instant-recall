@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLSchema, GraphQLList, GraphQLNonNull } from 'graphql'
-import { GraphQLDate, GraphQLDateTime } from 'graphql-scalars';
+import { GraphQLDateTime } from 'graphql-scalars';
 // import { decks, cards } from '../sampleData.js'
 
 import redis from '../config/redisClient.js'
@@ -12,7 +12,7 @@ const DeckType = new GraphQLObjectType({
         _id: {type: GraphQLID},
         deckName: {type: GraphQLString},
         isActive: {type: GraphQLBoolean},
-        lastActive: {type: GraphQLDate},
+        lastActive: {type: GraphQLDateTime},
         color:{type: GraphQLString},
         textColor:{type: GraphQLString},
         cards: {
@@ -77,7 +77,7 @@ const mutation = new GraphQLObjectType({
             args: {
                 deckName: {type: GraphQLNonNull(GraphQLString)},
                 isActive: {type: GraphQLBoolean},
-                lastActive: {type: GraphQLDate},
+                lastActive: {type: GraphQLDateTime},
                 color:{type: GraphQLString},
                 textColor:{type: GraphQLString},
             },
@@ -111,7 +111,7 @@ const mutation = new GraphQLObjectType({
                 _id: {type: GraphQLNonNull(GraphQLID)},
                 deckName: {type: GraphQLString},
                 isActive: {type: GraphQLBoolean},
-                lastActive: {type: GraphQLDate},
+                lastActive: {type: GraphQLDateTime},
                 color:{type: GraphQLString},
                 textColor:{type: GraphQLString},
             },

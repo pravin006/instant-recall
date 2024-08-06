@@ -23,8 +23,8 @@ export const DELETE_DECK = gql`
 `;
 
 export const UPDATE_DECK = gql`
-    mutation updateDeck($id: ID!, $name: String!, $color: String!, $textColor: String!) {
-        updateDeck(_id: $id, deckName: $name, color:$color, textColor:$textColor) {
+    mutation updateDeck($id: ID!, $name: String, $color: String, $textColor: String, $lastActive: DateTime) {
+        updateDeck(_id: $id, deckName: $name, color:$color, textColor:$textColor, lastActive: $lastActive) {
             _id
             deckName
             isActive
