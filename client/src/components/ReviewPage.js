@@ -100,9 +100,9 @@ function ReviewPage() {
                 <Button variant="outline-light" onClick={() => setViewAnswer(true)}>View Answer</Button> 
                 :(
                 <Col>
-                    <Button className='mb-2' onClick={() => handleRecall(0)} style={{backgroundColor:'#d61818', border:'none', color:'black', width:'100%'}}>Unable to recall.</Button>
-                    <Button className='mb-2' onClick={() => handleRecall(1)} style={{backgroundColor:'#d6d018', border:'none', color:'black', width:'100%'}}>Took awhile...</Button>
-                    <Button className='mb-2' onClick={() => handleRecall(3)} style={{backgroundColor:'#2bd618', border:'none', color:'black', width:'100%'}}>Easy!</Button>
+                    <Button className='review-button mb-2' onClick={() => handleRecall(0)} style={{backgroundColor:'#d61818', border:'none', color:'#27292b', width:'100%'}}>Unable to recall.</Button>
+                    <Button className='review-button mb-2' onClick={() => handleRecall(1)} style={{backgroundColor:'#d6d018', border:'none', color:'#27292b', width:'100%'}}>Took awhile...</Button>
+                    <Button className='review-button mb-2' onClick={() => handleRecall(3)} style={{backgroundColor:'#2bd618', border:'none', color:'#27292b', width:'100%'}}>Easy!</Button>
                 </Col>
                 )
             }

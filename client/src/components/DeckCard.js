@@ -23,7 +23,7 @@ function DeckCard({deck}) {
         text={deck.textColor}
         >
             <div className="card-content" style={{ cursor: 'pointer' }} onClick={() => handleClick(deck._id)}>
-          <Card.Header className='d-flex justify-content-between align-items-center'>
+          <Card.Header className='d-flex justify-content-between align-items-center' style={{borderBottom:'none'}}>
             <div onClick={() => handleClick(deck._id)} style={{ flex: 1 }}>
                 <Card.Title className="mb-0">{deck.deckName}</Card.Title>
             </div>

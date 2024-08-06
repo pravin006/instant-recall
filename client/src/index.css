@@ -55,3 +55,12 @@ code {
 .search-cards::placeholder{
   color: #ffffff  !important; 
 }
+
+.card:hover{
+  filter: brightness(1.2);
+}
+
+.review-button:hover{
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(95, 95, 95, 0.7);
+}
