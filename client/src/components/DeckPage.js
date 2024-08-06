@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
-import { useQuery} from '@apollo/client'
+import { useMutation, useQuery} from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col, FormControl } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
@@ -10,6 +10,7 @@ import { GET_DECK } from '../queries/deckQueries';
 import CardCard from './CardCard'
 import SpinnerComponent from './SpinnerComponent';
 import CreateEditDeckModal from './CreateEditDeckModal';
+import { UPDATE_DECK } from '../mutations/deckMutations';
 
 
 function DeckPage() {
@@ -18,12 +19,19 @@ function DeckPage() {
     variables:{_id:id}
   })  
   
+  const [updateLastReview] = useMutation(UPDATE_DECK)
+
   const navigate = useNavigate()
 
   const [overdueCards, setOverdueCards] = useState([])
   const [effectLoading, setEffectLoading] = useState(true)
   const [searchKeyword, setSearchKeyword] = useState('')
   const [filteredCards, setFilteredCards] = useState([])
+
+  const reviewButton = async () =>{
+    await updateLastReview({ variables: { id, lastActive: new Date() } })
+    navigate(`/review/${id}`)
+  }
 
   useEffect(()=>{
     setEffectLoading(true);
@@ -64,7 +72,7 @@ function DeckPage() {
               <Card.Body >
                 <Card.Title>{overdueCards.length} cards due</Card.Title>
                 <div className="d-flex justify-content-center">
-                  <Button variant="outline-dark" onClick={() => navigate(`/review/${id}`)}>Review</Button>
+                  <Button variant="outline-dark" onClick={reviewButton} disabled={overdueCards.length===0}>Review</Button>
                 </div>
               </Card.Body>
             </Card>
