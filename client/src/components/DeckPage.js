@@ -107,7 +107,7 @@ function DeckPage() {
         <Row className="mb-3 justify-content-center">
           {filteredCards.slice().reverse().map(card =>(
             <Col key={card._id} xs={12}  lg={6} xl={4} className="mb-3">
-              <CardCard card={card} color={data.deck.color}/>
+              <CardCard card={card} color={data.deck.color} dueForReview={card.dueForReview}/>
             </Col>
           ))}
 

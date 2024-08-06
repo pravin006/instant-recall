@@ -1,9 +1,16 @@
 import Card from 'react-bootstrap/Card';
 import DeleteDeck from './DeleteDeck';
 import { useNavigate } from "react-router-dom";
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 function DeckCard({deck}) {
   const navigate = useNavigate();
+
+  const formatDateTime = (dateString) =>{
+    const date = parseISO(dateString)
+    const distance = formatDistanceToNow(date, { addSuffix: true })
+    return distance
+  }
 
   const handleClick = (id) =>{
     navigate(`/deck/${id}`)
@@ -11,7 +18,7 @@ function DeckCard({deck}) {
 
   return (
     <Card
-        style={{ cursor: 'pointer', backgroundColor: deck.color}}
+        style={{ cursor: 'pointer', backgroundColor: deck.color, height:'9rem'}}
         border="light"
         text={deck.textColor}
         >
@@ -24,9 +31,9 @@ function DeckCard({deck}) {
           </Card.Header>
 
           <Card.Body onClick={() => handleClick(deck._id)} >
-            <Card.Text className='m-1'>
+            <Card.Text style={{textSize:'0.5rem'}}>
                 <br/>
-                Last Active: {deck.lastActive}
+                Last Active: {formatDateTime(deck.lastActive)}
             </Card.Text>
           </Card.Body>
           </div>
