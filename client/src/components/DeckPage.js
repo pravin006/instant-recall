@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { useMutation, useQuery} from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { Container, Row, Col, FormControl } from 'react-bootstrap'
+import { Container, Row, Col, FormControl, Form } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
@@ -27,10 +27,11 @@ function DeckPage() {
   const [effectLoading, setEffectLoading] = useState(true)
   const [searchKeyword, setSearchKeyword] = useState('')
   const [filteredCards, setFilteredCards] = useState([])
+  const [selectedTime, setSelectedTime] = useState(5)
 
   const reviewButton = async () =>{
     await updateLastReview({ variables: { id, lastActive: new Date() } })
-    navigate(`/review/${id}`)
+    navigate(`/review/${id}`, { state: { selectedTime:selectedTime } })
   }
 
   useEffect(()=>{
@@ -67,13 +68,15 @@ function DeckPage() {
         
         <Row className='mb-3 justify-content-center'>
           <Col xs={12} lg={8} xl={6} className="mb-3">
-            <Card className="align-items-center " style={{backgroundImage: `linear-gradient(45deg, ${data.deck.color}, #ffffff)`
-}}>
-              <Card.Body >
+            <Card className="align-items-center " style={{backgroundImage: `linear-gradient(45deg, ${data.deck.color}, #ffffff)`}}>
+              <Card.Body className="d-flex flex-column justify-content-center align-items-center">
                 <Card.Title>{overdueCards.length} cards due</Card.Title>
-                <div className="d-flex justify-content-center">
+                <Form.Select className="mb-1 form-select-dark" value={selectedTime} onChange={(e)=>setSelectedTime(e.target.value)} style={{backgroundColor: 'transparent', border:'1px solid #495057'}}>
+                    <option value={300000} style={{backgroundColor:'#27292b', color:'#ffffff'}}>5 Minutes</option>
+                    <option value={600000} style={{backgroundColor:'#27292b', color:'#ffffff'}}>10 Minutes</option>
+                    <option value={900000} style={{backgroundColor:'#27292b', color:'#ffffff'}}>15 Minutes</option>
+                </Form.Select>
                   <Button variant="outline-dark" onClick={reviewButton} disabled={overdueCards.length===0}>Review</Button>
-                </div>
               </Card.Body>
             </Card>
           </Col>

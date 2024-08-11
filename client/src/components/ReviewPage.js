@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Container,Row,Col, Button } from 'react-bootstrap'
 import { useApolloClient } from '@apollo/client';
 import { GET_DECK } from '../queries/deckQueries';
@@ -14,6 +14,8 @@ import { TiArrowBack } from "react-icons/ti";
 
 
 function ReviewPage() {
+    const location = useLocation()
+    const { selectedTime } = location.state
     const {deckid} = useParams()
     const [timer, setTimer] = useState(false)
     const [viewAnswer, setViewAnswer] = useState(false)
@@ -43,10 +45,10 @@ function ReviewPage() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setTimer(true)
-        }, 10000)
+        }, selectedTime)
 
         return () => clearTimeout(timer)
-    }, [])
+    }, [selectedTime])
   
     const handleRecall = (days) =>{
         const completed = minHeap.remove()
