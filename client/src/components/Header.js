@@ -1,10 +1,8 @@
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom'
 
 import logo from './assets/logo.png'
-import { CiSettings } from "react-icons/ci";
 
 function Header() {
     return (
@@ -16,18 +14,6 @@ function Header() {
                         <Navbar.Brand>InstantRecall</Navbar.Brand>
                     </div>
                 </NavLink>
-                
-
-            <Navbar.Toggle aria-controls="basic-navbar-nav">
-                    <CiSettings size={24} />
-            </Navbar.Toggle>
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                </Nav>
-            </Navbar.Collapse>
-
           </Container>
         </Navbar>
     );
