@@ -27,7 +27,7 @@ function DeckPage() {
   const [effectLoading, setEffectLoading] = useState(true)
   const [searchKeyword, setSearchKeyword] = useState('')
   const [filteredCards, setFilteredCards] = useState([])
-  const [selectedTime, setSelectedTime] = useState(5)
+  const [selectedTime, setSelectedTime] = useState(300000)
 
   const reviewButton = async () =>{
     await updateLastReview({ variables: { id, lastActive: new Date() } })
