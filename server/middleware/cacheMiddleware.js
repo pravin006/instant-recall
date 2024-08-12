@@ -18,7 +18,7 @@ const cacheMiddleware = async (req, res, next) => {
             res.sendToClient = res.send
             // override res.send that the graphqlHTTP calls to caching before sending to client
             res.send = (body) => {
-                redis.set(key, JSON.stringify(body), 'EX', 60)
+                redis.set(key, JSON.stringify(body), 'EX', 43200)
                 res.sendToClient(body)
             }
             next()
